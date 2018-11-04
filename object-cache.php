@@ -531,7 +531,7 @@ class WP_Object_Cache {
 			$this->cache_misses++;
 		}
 
-		return isset( $var ) ? $var : null;
+		return isset( $var ) ? $var : false;
 	}
 
 
