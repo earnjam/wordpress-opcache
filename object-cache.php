@@ -516,7 +516,10 @@ class WP_Object_Cache {
 	public function get( $key, $group = 'default', $force = false, &$success = null ) {
 		unset( $force );
 
-		@include $this->file_path( $this->build_key( $key, $group ) );
+		$file = $this->file_path( $this->build_key( $key, $group ) );
+		if ( file_exists( $file ) ) {
+			include $file;
+		}
 
 		$success = true;
 
@@ -712,7 +715,10 @@ class WP_Object_Cache {
 	 * @return bool
 	 */
 	public function extend_expiration( $key, $seconds = 60 ) {
-		@include $this->file_path( $key );
+		$file = $this->file_path( $key );
+		if ( file_exists( $file ) ) {
+			include $file;
+		}
 
 		if ( isset( $exp ) ) {
 			$extended = strtotime( '+' . $seconds . ' seconds', $exp );
