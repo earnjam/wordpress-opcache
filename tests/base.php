@@ -16,6 +16,7 @@ class OpcacheUnitTests extends WP_UnitTestCase {
 		$this->test_cache->setUp();
 
 		$this->object_cache = $this->test_cache->cache;
+
 	}
 
 	public function tearDown() {

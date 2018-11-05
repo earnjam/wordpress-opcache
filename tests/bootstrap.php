@@ -13,7 +13,7 @@ if ( ! $_core_dir ) {
 }
 
 // Easiest way to get this to where WordPress will load it
-if ( ! copy( dirname( __FILE__ ) . '/../object-cache.php', $_core_dir . '/wp-content/object-cache.php' ) ) {
+if ( ! copy( dirname( __FILE__ ) . '/../object-cache.php', dirname( $_core_dir ) . '/build/wp-content/object-cache.php' ) ) {
 	die( "Could not copy plugin file\n" );
 }
 

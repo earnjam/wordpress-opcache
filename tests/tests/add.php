@@ -76,7 +76,7 @@ class OpcacheUnitTestsAdd extends OpcacheUnitTests {
 		$this->assertFalse( $this->object_cache->add( $key, $value ) );
 
 		// Verify that the value does not exist in cache
-		$this->assertNull( $this->object_cache->get( $key ) );
+		$this->assertFalse( $this->object_cache->get( $key ) );
 	}
 
 	/**
@@ -93,7 +93,7 @@ class OpcacheUnitTestsAdd extends OpcacheUnitTests {
 		$this->assertFalse( $this->object_cache->add( $key, $value ) );
 
 		// Verify that the value does not exist in cache
-		$this->assertNull( $this->object_cache->get( $key ) );
+		$this->assertFalse( $this->object_cache->get( $key ) );
 
 		$key   = microtime();
 		$value = 'carruth';

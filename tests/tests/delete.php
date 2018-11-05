@@ -18,7 +18,7 @@ class OpcacheUnitTestsDelete extends OpcacheUnitTests {
 		$this->assertTrue( $this->object_cache->delete( $key ) );
 
 		// Verify that key is not gettable after delete
-		$this->assertNull( $this->object_cache->get( $key ) );
+		$this->assertFalse( $this->object_cache->get( $key ) );
 
 		// Verify that I can add a new value with this key
 		$this->assertTrue( $this->object_cache->add( $key, $value2 ) );
@@ -45,7 +45,7 @@ class OpcacheUnitTestsDelete extends OpcacheUnitTests {
 		$this->assertTrue( $this->object_cache->delete( $key, $group ) );
 
 		// Verify that key is not gettable after delete
-		$this->assertNull( $this->object_cache->get( $key, $group ) );
+		$this->assertFalse( $this->object_cache->get( $key, $group ) );
 
 		// Verify that I can add a new value with this key
 		$this->assertTrue( $this->object_cache->add( $key, $value2, $group ) );
