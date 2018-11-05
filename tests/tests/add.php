@@ -1,147 +1,139 @@
 <?php
 
-class OpcacheUnitTestsAdd extends OpcacheUnitTests
-{
-    /**
-     * Verify "add" method with string as value
-     */
-    public function test_add_string()
-    {
-        $key = microtime();
-        $value = 'brodeur';
+class OpcacheUnitTestsAdd extends OpcacheUnitTests {
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value));
+	/**
+	 * Verify "add" method with string as value
+	 */
+	public function test_add_string() {
+		$key   = microtime();
+		$value = 'brodeur';
 
-        // Verify correct value is returned
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-    /**
-     * Verify "add" method with int as value
-     */
-    public function test_add_int()
-    {
-        $key = microtime();
-        $value = 42;
+		// Verify correct value is returned
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        // Add int to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value));
+	/**
+	 * Verify "add" method with int as value
+	 */
+	public function test_add_int() {
+		$key   = microtime();
+		$value = 42;
 
-        // Verify correct value and type is returned
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Add int to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-    /**
-     * Verify "add" method with array as value
-     */
-    public function test_add_array()
-    {
-        $key = microtime();
-        $value = array( 5, 'quick' );
+		// Verify correct value and type is returned
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        // Add array to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value));
+	/**
+	 * Verify "add" method with array as value
+	 */
+	public function test_add_array() {
+		$key   = microtime();
+		$value = array( 5, 'quick' );
 
-        // Verify correct value and type is returned
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Add array to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-    /**
-     * Verify "add" method values when adding second object with existing key
-     */
-    public function test_add_fails_if_key_exists()
-    {
-        $key = microtime();
-        $value1 = 'parise';
-        $value2 = 'king';
+		// Verify correct value and type is returned
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        // Verify that one value is added to cache
-        $this->assertTrue($this->object_cache->add($key, $value1));
+	/**
+	 * Verify "add" method values when adding second object with existing key
+	 */
+	public function test_add_fails_if_key_exists() {
+		$key    = microtime();
+		$value1 = 'parise';
+		$value2 = 'king';
 
-        // Make sure second value with same key fails
-        $this->assertFalse($this->object_cache->add($key, $value2));
+		// Verify that one value is added to cache
+		$this->assertTrue( $this->object_cache->add( $key, $value1 ) );
 
-        // Make sure the value of the key is still correct
-        $this->assertSame($value1, $this->object_cache->get($key));
-    }
+		// Make sure second value with same key fails
+		$this->assertFalse( $this->object_cache->add( $key, $value2 ) );
 
-    /**
-     * Verify that wp_suspend_cache_addition() stops items from being added to cache
-     */
-    public function test_add_suspended_by_wp_cache_suspend_addition_string()
-    {
-        $key = microtime();
-        $value = 'crawford';
+		// Make sure the value of the key is still correct
+		$this->assertSame( $value1, $this->object_cache->get( $key ) );
+	}
 
-        // Suspend the cache
-        wp_suspend_cache_addition(true);
+	/**
+	 * Verify that wp_suspend_cache_addition() stops items from being added to cache
+	 */
+	public function test_add_suspended_by_wp_cache_suspend_addition_string() {
+		$key   = microtime();
+		$value = 'crawford';
 
-        // Attempt to add string to cache
-        $this->assertFalse($this->object_cache->add($key, $value));
+		// Suspend the cache
+		wp_suspend_cache_addition( true );
 
-        // Verify that the value does not exist in cache
-        $this->assertNull($this->object_cache->get($key));
-    }
+		// Attempt to add string to cache
+		$this->assertFalse( $this->object_cache->add( $key, $value ) );
 
-    /**
-     * Verify that wp_suspend_cache_addition() stops items from being added to cache, but allows additions after re-enabled
-     */
-    public function test_add_enabled_by_wp_cache_un_suspend_addition_string()
-    {
-        $key = microtime();
-        $value = 'miller';
+		// Verify that the value does not exist in cache
+		$this->assertNull( $this->object_cache->get( $key ) );
+	}
 
-        // Suspend the cache
-        wp_suspend_cache_addition(true);
+	/**
+	 * Verify that wp_suspend_cache_addition() stops items from being added to cache, but allows additions after re-enabled
+	 */
+	public function test_add_enabled_by_wp_cache_un_suspend_addition_string() {
+		$key   = microtime();
+		$value = 'miller';
 
-        // Attempt to add string to cache
-        $this->assertFalse($this->object_cache->add($key, $value));
+		// Suspend the cache
+		wp_suspend_cache_addition( true );
 
-        // Verify that the value does not exist in cache
-        $this->assertNull($this->object_cache->get($key));
+		// Attempt to add string to cache
+		$this->assertFalse( $this->object_cache->add( $key, $value ) );
 
-        $key = microtime();
-        $value = 'carruth';
+		// Verify that the value does not exist in cache
+		$this->assertNull( $this->object_cache->get( $key ) );
 
-        // Re-enable the cache
-        wp_suspend_cache_addition(false);
+		$key   = microtime();
+		$value = 'carruth';
 
-        // Add the string to the cache
-        $this->assertTrue($this->object_cache->add($key, $value));
+		// Re-enable the cache
+		wp_suspend_cache_addition( false );
 
-        // Verify that the value is in the cache
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Add the string to the cache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-    public function test_add_with_expiration_of_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		// Verify that the value is in the cache
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        // 30 days
-        $expiration = 60 * 60 * 24 * 30;
+	public function test_add_with_expiration_of_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        $this->assertTrue($this->object_cache->add($key, $value, $group, $expiration));
+		// 30 days
+		$expiration = 60 * 60 * 24 * 30;
 
-        $this->assertEquals($value, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->add( $key, $value, $group, $expiration ) );
 
-    public function test_add_with_expiration_longer_than_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		$this->assertEquals( $value, $this->object_cache->get( $key, $group ) );
+	}
 
-        // 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
-        $expiration = 60 * 60 * 24 * 30 + 1;
+	public function test_add_with_expiration_longer_than_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        $this->assertTrue($this->object_cache->add($key, $value, $group, $expiration));
+		// 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
+		$expiration = 60 * 60 * 24 * 30 + 1;
 
-        // Verify that the value is in cache
-        $this->assertEquals($value, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->add( $key, $value, $group, $expiration ) );
+
+		// Verify that the value is in cache
+		$this->assertEquals( $value, $this->object_cache->get( $key, $group ) );
+	}
 }

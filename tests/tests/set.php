@@ -1,86 +1,80 @@
 <?php
 
-class OpcacheUnitTestsSet extends OpcacheUnitTests
-{
-    public function test_set_value()
-    {
-        $key = microtime();
+class OpcacheUnitTestsSet extends OpcacheUnitTests {
 
-        $value = 'ck';
+	public function test_set_value() {
+		$key = microtime();
 
-        $this->assertTrue($this->object_cache->set($key, $value));
+		$value = 'ck';
 
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value ) );
 
-    public function test_set_value_with_expiration()
-    {
-        $key = microtime();
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        $value = 'ck';
+	public function test_set_value_with_expiration() {
+		$key = microtime();
 
-        $this->assertTrue($this->object_cache->set($key, $value, 'default', 3600));
+		$value = 'ck';
 
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, 'default', 3600 ) );
 
-    public function test_set_value_overwrites_previous()
-    {
-        $key = microtime();
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        $value = 'ck';
-        $new_value = 'abc';
+	public function test_set_value_overwrites_previous() {
+		$key = microtime();
 
-        $this->assertTrue($this->object_cache->set($key, $value));
+		$value     = 'ck';
+		$new_value = 'abc';
 
-        $this->assertSame($value, $this->object_cache->get($key));
+		$this->assertTrue( $this->object_cache->set( $key, $value ) );
 
-        $this->assertTrue($this->object_cache->set($key, $new_value));
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
 
-        $this->assertSame($new_value, $this->object_cache->get($key));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $new_value ) );
 
-    public function test_set_value_group()
-    {
-        $key = microtime();
+		$this->assertSame( $new_value, $this->object_cache->get( $key ) );
+	}
 
-        $value = 'ck';
-        $group = 'hola';
+	public function test_set_value_group() {
+		$key = microtime();
 
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
+		$value = 'ck';
+		$group = 'hola';
 
-        $this->assertSame($value, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
 
-    public function test_set_with_expiration_of_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		$this->assertSame( $value, $this->object_cache->get( $key, $group ) );
+	}
 
-        // 30 days
-        $expiration = 60 * 60 * 24 * 30;
+	public function test_set_with_expiration_of_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        $this->assertTrue($this->object_cache->set($key, $value, $group, $expiration));
+		// 30 days
+		$expiration = 60 * 60 * 24 * 30;
 
-        // Do the lookup with the API to verify that we get the value
-        $this->assertEquals($value, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group, $expiration ) );
 
-    public function test_set_with_expiration_longer_than_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		// Do the lookup with the API to verify that we get the value
+		$this->assertEquals( $value, $this->object_cache->get( $key, $group ) );
+	}
 
-        // 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
-        $expiration = 60 * 60 * 24 * 30 + 1;
+	public function test_set_with_expiration_longer_than_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        $this->assertTrue($this->object_cache->set($key, $value, $group, $expiration));
+		// 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
+		$expiration = 60 * 60 * 24 * 30 + 1;
 
-        // Do the lookup with the API to verify that we get the value
-        $this->assertEquals($value, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group, $expiration ) );
+
+		// Do the lookup with the API to verify that we get the value
+		$this->assertEquals( $value, $this->object_cache->get( $key, $group ) );
+	}
 }

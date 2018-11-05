@@ -1,58 +1,56 @@
 <?php
 
-class OpcacheUnitTestsDelete extends OpcacheUnitTests
-{
-    public function test_delete_key()
-    {
-        $key = microtime();
+class OpcacheUnitTestsDelete extends OpcacheUnitTests {
 
-        $value = 'sasquatch';
-        $value2  = 'yeti';
+	public function test_delete_key() {
+		$key = microtime();
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value));
+		$value  = 'sasquatch';
+		$value2 = 'yeti';
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value ) );
 
-        // Verify delete
-        $this->assertTrue($this->object_cache->delete($key));
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
 
-        // Verify that key is not gettable after delete
-        $this->assertNull($this->object_cache->get($key));
+		// Verify delete
+		$this->assertTrue( $this->object_cache->delete( $key ) );
 
-        // Verify that I can add a new value with this key
-        $this->assertTrue($this->object_cache->add($key, $value2));
+		// Verify that key is not gettable after delete
+		$this->assertNull( $this->object_cache->get( $key ) );
 
-        // Verify the new value
-        $this->assertSame($value2, $this->object_cache->get($key));
-    }
+		// Verify that I can add a new value with this key
+		$this->assertTrue( $this->object_cache->add( $key, $value2 ) );
 
-    public function test_delete_key_from_group()
-    {
-        $key = microtime();
+		// Verify the new value
+		$this->assertSame( $value2, $this->object_cache->get( $key ) );
+	}
 
-        $value = 'sasquatch';
-        $value2  = 'yeti';
+	public function test_delete_key_from_group() {
+		$key = microtime();
 
-        $group = 'comment';
+		$value  = 'sasquatch';
+		$value2 = 'yeti';
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
+		$group = 'comment';
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key, $group));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
 
-        // Verify delete
-        $this->assertTrue($this->object_cache->delete($key, $group));
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key, $group ) );
 
-        // Verify that key is not gettable after delete
-        $this->assertNull($this->object_cache->get($key, $group));
+		// Verify delete
+		$this->assertTrue( $this->object_cache->delete( $key, $group ) );
 
-        // Verify that I can add a new value with this key
-        $this->assertTrue($this->object_cache->add($key, $value2, $group));
+		// Verify that key is not gettable after delete
+		$this->assertNull( $this->object_cache->get( $key, $group ) );
 
-        // Verify the new value
-        $this->assertSame($value2, $this->object_cache->get($key, $group));
-    }
+		// Verify that I can add a new value with this key
+		$this->assertTrue( $this->object_cache->add( $key, $value2, $group ) );
+
+		// Verify the new value
+		$this->assertSame( $value2, $this->object_cache->get( $key, $group ) );
+	}
 }

@@ -1,82 +1,77 @@
 <?php
 
-class OpcacheUnitTestsGet extends OpcacheUnitTests
-{
-    public function test_get_value()
-    {
-        $key = microtime();
-        $value = 'brodeur';
+class OpcacheUnitTestsGet extends OpcacheUnitTests {
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value));
+	public function test_get_value() {
+		$key   = microtime();
+		$value = 'brodeur';
 
-        // Verify correct value is returned
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-    public function test_get_value_twice()
-    {
-        $key = microtime();
-        $value = 'brodeur';
+		// Verify correct value is returned
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value));
+	public function test_get_value_twice() {
+		$key   = microtime();
+		$value = 'brodeur';
 
-        // Verify correct value is returned
-        $this->assertSame($value, $this->object_cache->get($key));
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value ) );
 
-        // Verify correct value is returned when pulled from the internal cache
-        $this->assertSame($value, $this->object_cache->get($key));
-    }
+		// Verify correct value is returned
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
 
-    public function test_get_value_with_group()
-    {
-        $key = microtime();
-        $value = 'brodeur';
+		// Verify correct value is returned when pulled from the internal cache
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
+	}
 
-        $group = 'devils';
+	public function test_get_value_with_group() {
+		$key   = microtime();
+		$value = 'brodeur';
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value, $group));
+		$group = 'devils';
 
-        // Verify correct value is returned
-        $this->assertSame($value, $this->object_cache->get($key, $group));
-    }
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value, $group ) );
 
-    public function test_get_value_with_found_indicator()
-    {
-        $key = microtime();
-        $value = 'karlson';
-        $group = 'senators';
-        $found = false;
+		// Verify correct value is returned
+		$this->assertSame( $value, $this->object_cache->get( $key, $group ) );
+	}
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value, $group));
+	public function test_get_value_with_found_indicator() {
+		$key   = microtime();
+		$value = 'karlson';
+		$group = 'senators';
+		$found = false;
 
-        // Verify correct value is returned
-        $this->assertSame($value, $this->object_cache->get($key, $group, false, $found));
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value, $group ) );
 
-        // Verify that found variable is set to true because the item was found
-        $this->assertTrue($found);
-    }
+		// Verify correct value is returned
+		$this->assertSame( $value, $this->object_cache->get( $key, $group, false, $found ) );
 
-    public function test_get_value_with_found_indicator_when_value_is_not_found()
-    {
-        $key = microtime();
-        $value = 'neil';
-        $group = 'senators';
-        $found = false;
+		// Verify that found variable is set to true because the item was found
+		$this->assertTrue( $found );
+	}
 
-        // Add string to Opcache
-        $this->assertTrue($this->object_cache->add($key, $value, $group));
+	public function test_get_value_with_found_indicator_when_value_is_not_found() {
+		$key   = microtime();
+		$value = 'neil';
+		$group = 'senators';
+		$found = false;
 
-        // Verify that the value is deleted
-        $this->assertTrue($this->object_cache->delete($key, $group));
+		// Add string to Opcache
+		$this->assertTrue( $this->object_cache->add( $key, $value, $group ) );
 
-        // Verify that false is returned
-        $this->assertNull($this->object_cache->get($key, $group, false, $found));
+		// Verify that the value is deleted
+		$this->assertTrue( $this->object_cache->delete( $key, $group ) );
 
-        // Verify that found variable is set to true because the item was found
-        $this->assertTrue($found);
-    }
+		// Verify that false is returned
+		$this->assertNull( $this->object_cache->get( $key, $group, false, $found ) );
+
+		// Verify that found variable is set to true because the item was found
+		$this->assertTrue( $found );
+	}
 }

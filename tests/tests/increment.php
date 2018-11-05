@@ -1,77 +1,73 @@
 <?php
 
-class OpcacheUnitTestsIncrement extends OpcacheUnitTests
-{
-    public function test_increment_reduces_value_by_1()
-    {
-        $key = microtime();
+class OpcacheUnitTestsIncrement extends OpcacheUnitTests {
 
-        $value = 99;
+	public function test_increment_reduces_value_by_1() {
+		$key = microtime();
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value));
+		$value = 99;
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value ) );
 
-        // Verify that value was properly incremented
-        $this->assertSame(100, $this->object_cache->incr($key));
-    }
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
 
-    public function test_increment_reduces_value_by_x()
-    {
-        $key = microtime();
+		// Verify that value was properly incremented
+		$this->assertSame( 100, $this->object_cache->incr( $key ) );
+	}
 
-        $value = 99;
-        $x = 5;
+	public function test_increment_reduces_value_by_x() {
+		$key = microtime();
 
-        $reduced_value = $value + $x;
+		$value = 99;
+		$x     = 5;
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value));
+		$reduced_value = $value + $x;
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value ) );
 
-        // Verify that value was properly incremented
-        $this->assertSame($reduced_value, $this->object_cache->incr($key, $x));
-    }
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key ) );
 
-    public function test_increment_reduces_value_by_1_for_group()
-    {
-        $key = microtime();
+		// Verify that value was properly incremented
+		$this->assertSame( $reduced_value, $this->object_cache->incr( $key, $x ) );
+	}
 
-        $value = 99;
-        $group = 'counts';
+	public function test_increment_reduces_value_by_1_for_group() {
+		$key = microtime();
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
+		$value = 99;
+		$group = 'counts';
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key, $group));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
 
-        // Verify that value was properly incremented
-        $this->assertSame(100, $this->object_cache->incr($key, 1, $group));
-    }
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key, $group ) );
 
-    public function test_increment_reduces_value_by_x_for_group()
-    {
-        $key = microtime();
+		// Verify that value was properly incremented
+		$this->assertSame( 100, $this->object_cache->incr( $key, 1, $group ) );
+	}
 
-        $value = 99;
-        $x = 5;
+	public function test_increment_reduces_value_by_x_for_group() {
+		$key = microtime();
 
-        $group = 'counts';
+		$value = 99;
+		$x     = 5;
 
-        $reduced_value = $value + $x;
+		$group = 'counts';
 
-        // Verify set
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
+		$reduced_value = $value + $x;
 
-        // Verify value
-        $this->assertSame($value, $this->object_cache->get($key, $group));
+		// Verify set
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
 
-        // Verify that value was properly incremented
-        $this->assertSame($reduced_value, $this->object_cache->incr($key, $x, $group));
-    }
+		// Verify value
+		$this->assertSame( $value, $this->object_cache->get( $key, $group ) );
+
+		// Verify that value was properly incremented
+		$this->assertSame( $reduced_value, $this->object_cache->incr( $key, $x, $group ) );
+	}
 }

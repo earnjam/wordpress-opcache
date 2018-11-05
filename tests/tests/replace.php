@@ -1,69 +1,65 @@
 <?php
 
-class OpcacheUnitTestsReplace extends OpcacheUnitTests
-{
-    public function test_replace_value_with_another_value()
-    {
-        $key = microtime();
+class OpcacheUnitTestsReplace extends OpcacheUnitTests {
 
-        $value1 = 'parise';
-        $value2 = 'kovalchuk';
+	public function test_replace_value_with_another_value() {
+		$key = microtime();
 
-        $this->assertTrue($this->object_cache->add($key, $value1));
+		$value1 = 'parise';
+		$value2 = 'kovalchuk';
 
-        $this->assertSame($value1, $this->object_cache->get($key));
+		$this->assertTrue( $this->object_cache->add( $key, $value1 ) );
 
-        $this->assertTrue($this->object_cache->replace($key, $value2));
+		$this->assertSame( $value1, $this->object_cache->get( $key ) );
 
-        $this->assertSame($value2, $this->object_cache->get($key));
-    }
+		$this->assertTrue( $this->object_cache->replace( $key, $value2 ) );
 
-    public function test_replace_value_when_key_is_not_set()
-    {
-        $key = microtime();
+		$this->assertSame( $value2, $this->object_cache->get( $key ) );
+	}
 
-        $value = 'parise';
+	public function test_replace_value_when_key_is_not_set() {
+		$key = microtime();
 
-        $this->assertFalse($this->object_cache->replace($key, $value));
+		$value = 'parise';
 
-        $this->assertNull($this->object_cache->get($key));
-    }
+		$this->assertFalse( $this->object_cache->replace( $key, $value ) );
 
-    public function test_replace_with_expiration_of_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		$this->assertNull( $this->object_cache->get( $key ) );
+	}
 
-        $value2 = 'belgium';
+	public function test_replace_with_expiration_of_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        // 30 days
-        $expiration = 60 * 60 * 24 * 30;
+		$value2 = 'belgium';
 
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
-        $this->assertTrue($this->object_cache->replace($key, $value2, $group, $expiration));
+		// 30 days
+		$expiration = 60 * 60 * 24 * 30;
 
-        // Verify that the value is in cache by accessing Opcache directly
-        $this->assertEquals($value2, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
+		$this->assertTrue( $this->object_cache->replace( $key, $value2, $group, $expiration ) );
 
-    public function test_replace_with_expiration_longer_than_30_days()
-    {
-        $key = 'usa';
-        $value = 'merica';
-        $group = 'july';
-        $built_key = $this->object_cache->buildKey($key, $group);
+		// Verify that the value is in cache by accessing Opcache directly
+		$this->assertEquals( $value2, $this->object_cache->get( $key, $group ) );
+	}
 
-        $value2 = 'belgium';
+	public function test_replace_with_expiration_longer_than_30_days() {
+		$key       = 'usa';
+		$value     = 'merica';
+		$group     = 'july';
+		$built_key = $this->object_cache->build_key( $key, $group );
 
-        // 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
-        $expiration = 60 * 60 * 24 * 30 + 1;
+		$value2 = 'belgium';
 
-        $this->assertTrue($this->object_cache->set($key, $value, $group));
-        $this->assertTrue($this->object_cache->replace($key, $value2, $group, $expiration));
+		// 30 days and 1 second; if interpreted as timestamp, becomes "Sat, 31 Jan 1970 00:00:01 GMT"
+		$expiration = 60 * 60 * 24 * 30 + 1;
 
-        // Verify that the value is in cache by accessing Opcache directly
-        $this->assertEquals($value2, $this->object_cache->get($key, $group));
-    }
+		$this->assertTrue( $this->object_cache->set( $key, $value, $group ) );
+		$this->assertTrue( $this->object_cache->replace( $key, $value2, $group, $expiration ) );
+
+		// Verify that the value is in cache by accessing Opcache directly
+		$this->assertEquals( $value2, $this->object_cache->get( $key, $group ) );
+	}
 }

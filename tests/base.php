@@ -1,26 +1,24 @@
 <?php
 
-class OpcacheUnitTests extends WP_UnitTestCase
-{
-    public $plugin_slug = 'opcache-unit-tests';
+class OpcacheUnitTests extends WP_UnitTestCase {
 
-    public $object_cache;
+	public $plugin_slug = 'opcache-unit-tests';
 
-    public $servers;
+	public $object_cache;
 
-    public $test_cache;
+	public $servers;
 
-    public function setUp()
-    {
-        // Instantiate the core cache tests and use that setup routine
-        $this->test_cache = new Tests_Cache();
-        $this->test_cache->setUp();
+	public $test_cache;
 
-        $this->object_cache = $this->test_cache->cache;
-    }
+	public function setUp() {
+		// Instantiate the core cache tests and use that setup routine
+		$this->test_cache = new Tests_Cache();
+		$this->test_cache->setUp();
 
-    public function tearDown()
-    {
-        $this->test_cache->tearDown();
-    }
+		$this->object_cache = $this->test_cache->cache;
+	}
+
+	public function tearDown() {
+		$this->test_cache->tearDown();
+	}
 }
